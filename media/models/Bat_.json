@@ -1,0 +1,102 @@
+{"frames": [
+
+{
+	"filename": "Dennis_0001.png",
+	"frame": {"x":1,"y":305,"w":175,"h":120},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":14,"w":175,"h":120},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0002.png",
+	"frame": {"x":123,"y":305,"w":156,"h":124},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":12,"w":156,"h":124},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0003.png",
+	"frame": {"x":206,"y":96,"w":198,"h":102},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":30,"w":198,"h":102},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0004.png",
+	"frame": {"x":206,"y":1,"w":202,"h":93},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":36,"w":202,"h":93},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0005.png",
+	"frame": {"x":406,"y":130,"w":173,"h":105},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":23,"y":34,"w":173,"h":105},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0006.png",
+	"frame": {"x":378,"y":305,"w":124,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":52,"y":32,"w":124,"h":123},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0007.png",
+	"frame": {"x":249,"y":200,"w":108,"h":127},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":56,"y":30,"w":108,"h":127},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0008.png",
+	"frame": {"x":410,"y":1,"w":94,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":63,"y":32,"w":94,"h":127},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0009.png",
+	"frame": {"x":1,"y":102,"w":180,"h":114},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":35,"w":180,"h":114},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Dennis_0010.png",
+	"frame": {"x":1,"y":1,"w":203,"h":99},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":32,"w":203,"h":99},
+	"sourceSize": {"w":205,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Bat_.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0ac6edeb18629e3816e40a75ae189031:f84c2ccc9c8d5cecf814da3919e0dcb2:c549ad9d8cbced71f331920dfbf58ff8$"
+}
+}
