@@ -806,25 +806,54 @@ function PickerScreen() {
     pickerNav.doUpdate = function(){
         if (__input.right){
             if(pickerNav.hasFocus.characterId == pickerNav.mavis.characterId){
-
+                pickerNav.hasFocus = pickerNav.drac;
+                TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(pickerNav.mavis, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
             }
             else if(pickerNav.hasFocus.characterId == pickerNav.drac.characterId){
 
+                if(pickerNav.franklinAvailable){
+                    pickerNav.hasFocus = pickerNav.franklin;
+                    TweenLite.to(pickerNav.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
+                else if(pickerNav.murrayAvailable){
+                    pickerNav.hasFocus = pickerNav.murray;
+                    TweenLite.to(pickerNav.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
             }
             else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-
+                if(pickerNav.murrayAvailable){
+                    pickerNav.hasFocus = pickerNav.murray;
+                    TweenLite.to(pickerNav.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
             }
         }
         else if (__input.left){
 
             if(pickerNav.hasFocus.characterId == pickerNav.drac.characterId){
-
+                pickerNav.hasFocus = pickerNav.mavis;
+                TweenLite.to(pickerNav.mavis, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
             }
             else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-
+                pickerNav.hasFocus = pickerNav.drac;
+                TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
             }
             else if(pickerNav.hasFocus.characterId == pickerNav.murray.characterId){
-
+                if(pickerNav.franklin){
+                    pickerNav.hasFocus = pickerNav.franklin;
+                    TweenLite.to(pickerNav.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
+                else{
+                    pickerNav.hasFocus = pickerNav.drac;
+                    TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
             }
 
         }
