@@ -309,7 +309,8 @@ function TitleScreen() {
     };
 
     var titleNavigation = {};
-    titleNavigation.hasFocus = r;
+    __input.enter = false; //Prevents key firing before BlitInput key up event clears the state
+    titleNavigation.hasFocus = m;
     titleNavigation.playButton = m;
     titleNavigation.instructionButton = l;
 
@@ -350,6 +351,14 @@ function TitleScreen() {
                 __snds.playSound("snd_click", "interface");
                 a.doDestroy();
                 SCREEN = new InstructionsScreen
+            }
+        }
+        else if (__input.back){
+            try {
+                nz.nzappapi.AppShutdown();
+            }
+            catch (err) {
+                console.log("Error calling AppShutdown.");
             }
         }
     }
@@ -397,7 +406,13 @@ function TitleScreen() {
             overwrite: !0,
             ease: Elastic.easeOut.config(1, .8),
             delay: a
-        })
+        });
+        a += .25;
+        TweenLite.to(m, .1, {
+            transform: "scale(1.1, 1.1)",
+            overwrite: !0,
+            delay: a
+        });
     };
     this.doDestroy = function () {
         clearInterval(a.cheaterInterval);
@@ -723,6 +738,7 @@ function PickerScreen() {
             if (void 0 !== f.button) switch (d.style.cursor = "pointer", d.style.pointerEvents = "auto", f.button) {
                 case "Back":
                     pickerNav.backButton = d;
+                    pickerNav.backButton.characterId = -2;
                     d.onmouseup = function (c) {
                         sCode.trackGame("cruiseshiprun", "back");
                         a.doDestroy();
@@ -747,6 +763,7 @@ function PickerScreen() {
                     break;
                 case "Play":
                     pickerNav.playButton = d;
+                    pickerNav.playButton.characterId = -1;
                     d.style.opacity = .5;
                     d.onmouseup = function (c) {
                         -1 < a.characterNum && (sCode.trackGame("cruiseshiprun", "play:" + ["Drac", "Mavis", "Frank", "Murray"][a.characterNum - 1]), a.doDestroy(), doFinishSecondLoading(a.characterNum, function () {
@@ -791,7 +808,7 @@ function PickerScreen() {
                     }
                     else if (f.id == 2){
                         pickerNav.mavis = d;
-                        PickerNav.hasFocus = pickerNav.mavis;
+                        pickerNav.hasFocus = pickerNav.mavis;
                     }
                     else if (f.id == 3){
                         pickerNav.franklin = d;
@@ -803,102 +820,126 @@ function PickerScreen() {
         }
     });
 
+    __input.enter = false; //Prevents key firing before BlitInput key up event clears the state
     pickerNav.doUpdate = function(){
         if (__input.right){
-            if(pickerNav.hasFocus.characterId == pickerNav.mavis.characterId){
-                pickerNav.hasFocus = pickerNav.drac;
-                TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                TweenLite.to(pickerNav.mavis, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
-            }
-            else if(pickerNav.hasFocus.characterId == pickerNav.drac.characterId){
 
-                if(pickerNav.franklinAvailable){
-                    pickerNav.hasFocus = pickerNav.franklin;
-                    TweenLite.to(pickerNav.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            __input.right = false;
+            if(this.hasFocus.characterId == this.mavis.characterId){
+                console.log("Moving to Drac");
+                this.hasFocus = this.drac;
+                TweenLite.to(this.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(this.mavis, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            }
+            else if(this.hasFocus.characterId == this.drac.characterId){
+
+                if(this.franklinAvailable){
+                    console.log("Moving to Franklin");
+                    this.hasFocus = this.franklin;
+                    TweenLite.to(this.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
                 }
-                else if(pickerNav.murrayAvailable){
-                    pickerNav.hasFocus = pickerNav.murray;
-                    TweenLite.to(pickerNav.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                else if(this.murrayAvailable){
+                    console.log("Moving to Murray");
+                    this.hasFocus = this.murray;
+                    TweenLite.to(this.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
                 }
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-                if(pickerNav.murrayAvailable){
-                    pickerNav.hasFocus = pickerNav.murray;
-                    TweenLite.to(pickerNav.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                    TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            else if(this.hasFocus.characterId == this.franklin.characterId){
+                if(this.murrayAvailable){
+                    console.log("Moving to Murray");
+                    this.hasFocus = this.murray;
+                    TweenLite.to(this.murray, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.franklin, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                }
+            }
+            else if(this.hasFocus.className == this.backButton.className){
+                
+                if(!this.playLocked){
+                    TweenLite.to(this.backButton, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                    TweenLite.to(this.playButton, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    this.hasFocus = this.playButton;
                 }
             }
         }
         else if (__input.left){
-
-            if(pickerNav.hasFocus.characterId == pickerNav.drac.characterId){
-                pickerNav.hasFocus = pickerNav.mavis;
-                TweenLite.to(pickerNav.mavis, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                TweenLite.to(pickerNav.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            __input.left = false;
+            if(this.hasFocus.characterId == this.drac.characterId){
+                this.hasFocus = this.mavis;
+                TweenLite.to(this.mavis, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(this.drac, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-                pickerNav.hasFocus = pickerNav.drac;
-                TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            else if(this.hasFocus.characterId == this.franklin.characterId){
+                this.hasFocus = this.drac;
+                TweenLite.to(this.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                TweenLite.to(this.franklin, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.murray.characterId){
-                if(pickerNav.franklin){
-                    pickerNav.hasFocus = pickerNav.franklin;
-                    TweenLite.to(pickerNav.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                    TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+            else if(this.hasFocus.characterId == this.murray.characterId){
+                if(this.franklinAvailable){
+                    this.hasFocus = this.franklin;
+                    TweenLite.to(this.franklin, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
                 }
                 else{
-                    pickerNav.hasFocus = pickerNav.drac;
-                    TweenLite.to(pickerNav.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
-                    TweenLite.to(pickerNav.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                    this.hasFocus = this.drac;
+                    TweenLite.to(this.drac, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.murray, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
                 }
             }
+            else if (this.hasFocus.className == this.playButton.className){
+                TweenLite.to(this.playButton, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                TweenLite.to(this.backButton, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                this.hasFocus = this.backButton;
+            }
 
         }
-        else if (__input.down){
-            if(pickerNav.hasFocus.className == pickerNav.backButton.className || pickerNav.hasFocus.className == pickerNav.playButton.className){
-                //Animation
-
-                //SetFocus
-                pickerNav.hasFocus = pickerNav.mavis;
-
-                
+        else if (__input.dn){
+            __input.dn = false;
+            if(this.hasFocus.className == this.backButton.className){
+                TweenLite.to(this.backButton, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                TweenLite.to(this.mavis, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                this.hasFocus = this.mavis;
             }
-            
+            else if (this.hasFocus.className == this.playButton.className){
+                TweenLite.to(this.playButton, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                TweenLite.to(this.mavis, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                this.hasFocus = this.mavis;
+            }
         }
         else if (__input.up){
+            __input.up = false;
+            if(this.hasFocus.className != this.backButton.className && this.hasFocus.className != this.playButton.className){
 
-            if(pickerNav.hasFocus.className != pickerNav.backButton.className && pickerNav.hasFocus.className != pickerNav.playButton.className){
-
-                if(pickerNav.playLocked){
-                    //animation
-
-                    //Set Focus
-                    pickerNav.hasFocus = pickerNav.backButton;
+                if(this.playLocked){
+                    TweenLite.to(this.backButton, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.hasFocus, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                    this.hasFocus = this.backButton;
                     
                 }
                 else{
-                    pickerNav.hasFocus = pickerNav.playButton;
+                    TweenLite.to(this.playButton, .1, {transform: "scale(1.1, 1.1)", overwrite:true});
+                    TweenLite.to(this.hasFocus, .5, {transform: "scale(1.0, 1.0)", overwrite:true, ease: Elastic.easeOut.config(1, 0.5)});
+                    this.hasFocus = this.playButton;
                 }
             }
 
         }
         else if (__input.enter){
-            if(pickerNav.hasFocus.characterId == pickerNav.mavis.characterId){
-                this.selectCharacter(pickerNav.mavis);
+            __input.enter = false;
+            if(this.hasFocus.characterId == this.mavis.characterId){
+                this.selectCharacter(this.mavis);
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.drac.characterId){
-                this.selectCharacter(pickerNav.drac);
+            else if(this.hasFocus.characterId == this.drac.characterId){
+                this.selectCharacter(this.drac);
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-                this.selectCharacter(pickerNav.franklin);
+            else if(this.hasFocus.characterId == this.franklin.characterId){
+                this.selectCharacter(this.franklin);
             }
-            else if(pickerNav.hasFocus.characterId == pickerNav.franklin.characterId){
-                this.selectCharacter(pickerNav.murray);
+            else if(this.hasFocus.characterId == this.murray.characterId){
+                this.selectCharacter(this.murray);
             }
-            else if(pickerNav.hasFocus.className == pickerNav.backButton.className){
+            else if(this.hasFocus.className == this.backButton.className){
                 this.forget = true;
                 sCode.trackGame("cruiseshiprun", "back");
                 a.doDestroy();
@@ -907,7 +948,7 @@ function PickerScreen() {
                 });
                 __snds.playSound("snd_click", "interface")
             }
-            else if(pickerNav.hasFocus.className == pickerNav.playButton.className){
+            else if(this.hasFocus.className == this.playButton.className){
                 this.forget = true;
                 -1 < a.characterNum && (sCode.trackGame("cruiseshiprun", "play:" + ["Drac", "Mavis", "Frank", "Murray"][a.characterNum - 1]), a.doDestroy(), doFinishSecondLoading(a.characterNum, function () {
                     SCREEN = new GameScreen;
@@ -915,11 +956,34 @@ function PickerScreen() {
                 }), __snds.playSound("snd_click", "interface"))
             }
         }
+        else if (__input.back){
+            try {
+                nz.nzappapi.AppShutdown();
+            }
+            catch (err) {
+                console.log("Error calling AppShutdown.");
+            }
+        }
     }
 
     f && (g.MurrayLockLayer.element.style.display = "none");
     d && (g.FrankLockLayer.element.style.display = "none");
     var m = void 0;
+    pickerNav.previousHighlight = undefined;
+    pickerNav.selectCharacter = function(buttonElement) {
+        console.log("Selecting character...");
+        if (a.characterNum>-1) {
+			this.previousHighlight.style.backgroundImage="url("+(images["MavisStatsImageBackground"].currentSrc||images["MavisStatsImageBackground"].src)+")";
+		}
+		this.previousHighlight = buttonElement;
+		buttonElement.style.backgroundImage="url("+(images["SelectedImageBackground"].currentSrc||images["SelectedImageBackground"].src)+")";;
+		a.characterNum = buttonElement.characterId;
+		g.PickerPlayButton.element.style.opacity = 1;
+        g.PickerPlay.element.style.opacity = 1
+
+        this.playLocked = false;
+    };
+
     this.selectCharacter = function (c) {
         -1 < a.characterNum && (m.style.backgroundImage = "url(" + (images.MavisStatsImageBackground.currentSrc || images.MavisStatsImageBackground.src) + ")");
         m = c;
@@ -1132,6 +1196,35 @@ function RecapScreen(a) {
             ease: Elastic.easeOut.config(1, .5)
         })
     };
+    var recapNav = {};
+    __input.enter = false; //Prevents key firing before BlitInput key up event clears the state
+
+    recapNav.doUpdate = function(){
+        if (__input.enter){
+            console.log("Enter Play");
+            this.hasFocus = null;
+            this.forget = true;
+            sCode.trackGame("cruiseshiprun", "playagain");
+            __snds.playSound("snd_click",
+                "interface");
+            c.doDestroy();
+            doFinishLoading(function () {
+                SCREEN = new PickerScreen
+            });
+        }
+        else if (__input.back){
+            try {
+                nz.nzappapi.AppShutdown();
+            }
+            catch (err) {
+                console.log("Error calling AppShutdown.");
+            }
+        }
+    }
+
+    actives.push(recapNav);
+
+
     var n = e.appendChild(document.createElement("div"));
     n.className = "b_main";
     __utils.doHTMLText(n, oLANG.main_site);
@@ -2352,6 +2445,14 @@ function doInit() {
         e = new Date;
     date_msg = e >= new Date(date_playing) ? oLANG.date_msg_4 : e >= a ? oLANG.date_msg_3 : e >= c ? oLANG.date_msg_2 : oLANG.date_msg_1;
     __utils.doInitFocusManager(doLoseFocus, doGetFocus);
+
+    try {
+        nz.nzappapi.AppVisible();
+    }
+    catch (err) {
+        console.log("Error calling AppVisible.");
+    }
+    
     doPreloadAssets()
 }
 
